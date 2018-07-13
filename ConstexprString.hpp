@@ -47,7 +47,7 @@ public:
     constexpr std::size_t	asNumber() const;
 
 private:
-    void	checkForNulCharacter();
+    constexpr void	checkForNulCharacter();
 };
 
 template <typename T>

@@ -260,7 +260,7 @@ CreateConstexprStringFromInt(unsigned int number)
 
 
 template <std::size_t N>
-void
+constexpr void
 ConstexprString<N>::checkForNulCharacter()
 {
     if (m_data[m_size - 1] == '\0')
