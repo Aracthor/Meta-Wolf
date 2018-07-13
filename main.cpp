@@ -1,8 +1,14 @@
 #include <iostream>
 
+#include "Keyboard.hpp"
+
 int	main()
 {
-    std::cout << "Key pressed: " << KEYBOARD_INPUT[0] << std::endl;
+    constexpr Keyboard::Key	key = Keyboard::GetKeyPressed();
+    constexpr auto output = Keyboard::GetKeyAsConstexprString<key>();
 
-    return 0;
+    for (const char& c : output)
+	std::cout << c;
+
+    return key == Keyboard::Escape;
 }
