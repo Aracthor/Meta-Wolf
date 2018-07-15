@@ -33,7 +33,7 @@ Map<MAP_STRING_LENGTH>::pointIsInsideWall(float x, float y) const
 
 template <std::size_t MAP_STRING_LENGTH>
 constexpr bool
-Map<MAP_STRING_LENGTH>::pointIsInsideWall(const Vector& point) const
+Map<MAP_STRING_LENGTH>::pointIsInsideWall(const Vector2f& point) const
 {
     return pointIsInsideWall(point.X, point.Y);
 }

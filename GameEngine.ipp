@@ -1,10 +1,10 @@
 namespace
 {
 constexpr float
-calcDistance(auto& map, const Vector& playerPosition, const Vector& vector, float vectorNorm, char& outWall)
+calcDistance(auto& map, const Vector2f& playerPosition, const Vector2f& vector, float vectorNorm, char& outWall)
 {
-    Vector	movement = vector;
-    Vector	position = playerPosition + movement;
+    Vector2f	movement = vector;
+    Vector2f	position = playerPosition + movement;
 
     while (!map.pointIsInsideWall(position))
     {
@@ -147,7 +147,7 @@ template <unsigned int WindowWidth, unsigned int WindowHeight>
 constexpr void
 GameEngine<WindowWidth, WindowHeight>::processColumn(const auto& map, unsigned int columnId)
 {
-    Vector	vector;
+    Vector2f	vector;
     char	wallChar = '#';
 
     vector.X = 10.f;
@@ -155,11 +155,10 @@ GameEngine<WindowWidth, WindowHeight>::processColumn(const auto& map, unsigned i
     const float	angle = Maths::degToRad(m_playerAngle);
     const float angleCos = Maths::cos(angle);
     const float angleSin = Maths::sin(angle);
-    Vector	rotatedVector;
+    Vector2f	rotatedVector;
     rotatedVector.X = (vector.X * angleCos + vector.Y * angleSin);
     rotatedVector.Y = (vector.X * angleSin - vector.Y * angleCos);
 
-    // TODO rotate vector
     const float distance = calcDistance(map, m_playerPosition, rotatedVector, rotatedVector.length(), wallChar);
     const unsigned int wallSize = static_cast<float>(WindowHeight) * 500.f / distance;
     const unsigned int startWallOffset = (wallSize >= WindowHeight) ? 0 : WindowHeight / 2 - wallSize / 2;

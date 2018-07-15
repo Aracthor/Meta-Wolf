@@ -3,7 +3,7 @@
 #include "ConstexprString.hpp"
 #include "Keyboard.hpp"
 #include "Map.hpp"
-#include "Vector.hpp"
+#include "Vector2.hpp"
 
 template <unsigned int WindowWidth, unsigned int WindowHeight>
 class	GameEngine
@@ -24,9 +24,9 @@ private:
 
 private:
     Keyboard::Key	m_pressedKey;
-    Vector		m_playerPosition;
+    Vector2f		m_playerPosition;
     float		m_playerAngle;
-    Vector		m_playerDirection;
+    Vector2f		m_playerDirection;
     char	        m_output[WindowHeight * WindowWidth];
 };
 
