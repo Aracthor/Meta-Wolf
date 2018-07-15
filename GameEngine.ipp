@@ -52,7 +52,7 @@ GameEngine<WindowWidth, WindowHeight>::GameEngine(const char(&previousGameState)
 
     for (unsigned int i = 0; i < WindowWidth * WindowHeight; i++)
     {
-	m_output[i] = '.';
+	m_output[i] = ' ';
     }
     for (unsigned int i = 0; i < WindowWidth; ++i)
     {

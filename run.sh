@@ -27,7 +27,7 @@ do
 	error_or_stop=$?
 	echo ")\"" >> game_state.txt
 
-	echo $game_output # Show the rendering to the player
+	echo "$game_output" # Show the rendering to the player
 
         # Read one key pressed
 	if [ $error_or_stop == 0 ]
