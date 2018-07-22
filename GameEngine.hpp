@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Color.hpp"
 #include "ConstexprString.hpp"
 #include "Keyboard.hpp"
 #include "Map.hpp"
@@ -28,6 +29,7 @@ private:
     float		m_playerAngle;
     Vector2f		m_playerDirection;
     char	        m_output[WindowHeight * WindowWidth];
+    Color		m_colors[WindowHeight * WindowWidth];
 };
 
 #include "GameEngine.ipp"

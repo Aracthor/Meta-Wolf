@@ -147,6 +147,39 @@ ConstexprString<N>::resize(unsigned int newSize)
 
 
 template <std::size_t N>
+constexpr void
+ConstexprString<N>::operator+=(char c)
+{
+    m_data[m_size] = c;
+    m_size++;
+}
+
+template <std::size_t N>
+template <std::size_t N2>
+constexpr void
+ConstexprString<N>::operator+=(const char(&a)[N2])
+{
+    for (unsigned int i = 0; i < N2; i++)
+    {
+	m_data[m_size + i] = a[i];
+    }
+    m_size += N2;
+}
+
+template <std::size_t N>
+template <std::size_t N2>
+constexpr void
+ConstexprString<N>::operator+=(const ConstexprString<N2>& other)
+{
+    for (unsigned int i = 0; i < other.size(); i++)
+    {
+	m_data[m_size + i] = other[i];
+    }
+    m_size += other.size();
+}
+
+
+template <std::size_t N>
 constexpr ConstexprString<N + 1>
 ConstexprString<N>::operator+(char c) const
 {
@@ -154,22 +187,6 @@ ConstexprString<N>::operator+(char c) const
     newString.resize(m_size + 1);
     newString[m_size] = c;
     return newString;
-}
-
-template <std::size_t N>
-template <std::size_t N2>
-constexpr ConstexprString<N + N2>
-ConstexprString<N>::operator+(const ConstexprString<N2>& other) const
-{
-    ConstexprString<N + N2>	result(*this);
-
-    for (unsigned int i = 0; i < other.size(); i++)
-    {
-	result[m_size + i] = other[i];
-    }
-    result.resize(m_size + other.size());
-
-    return result;
 }
 
 template <std::size_t N>
@@ -184,6 +201,22 @@ ConstexprString<N>::operator+(const char(&a)[N2]) const
 	result[m_size + i] = a[i];
     }
     result.resize(m_size + N2);
+
+    return result;
+}
+
+template <std::size_t N>
+template <std::size_t N2>
+constexpr ConstexprString<N + N2>
+ConstexprString<N>::operator+(const ConstexprString<N2>& other) const
+{
+    ConstexprString<N + N2>	result(*this);
+
+    for (unsigned int i = 0; i < other.size(); i++)
+    {
+	result[m_size + i] = other[i];
+    }
+    result.resize(m_size + other.size());
 
     return result;
 }

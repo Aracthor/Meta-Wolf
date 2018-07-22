@@ -38,6 +38,13 @@ public:
     constexpr std::size_t	size() const;
     constexpr void		resize(unsigned int newSize);
 
+    // Be wary about those : you must be sure your ConstexprString is already big enough to be allowed to resize.
+    constexpr void		operator+=(char c);
+    template <std::size_t N2>
+    constexpr void		operator+=(const char(&a)[N2]);
+    template <std::size_t N2>
+    constexpr void	        operator+=(const ConstexprString<N2>& other);
+
     constexpr ConstexprString<N + 1>	operator+(char c) const;
     template <std::size_t N2>
     constexpr ConstexprString<N + N2>	operator+(const char(&a)[N2]) const;

@@ -1,7 +1,7 @@
 namespace
 {
 constexpr float
-calcDistance(auto& map, const Vector2f& playerPosition, const Vector2f& vector, float vectorNorm, char& outWall)
+calcDistance(auto& map, const Vector2f& playerPosition, const Vector2f& vector, float vectorNorm, char& outWall, Color& outColor)
 {
     Vector2f	movement = vector;
     Vector2f	position = playerPosition + movement;
@@ -24,6 +24,10 @@ calcDistance(auto& map, const Vector2f& playerPosition, const Vector2f& vector, 
     unsigned int	xAsInt = static_cast<unsigned int>(position.X);
 
     outWall = map.getPointChar(position);
+    if (xAsInt % 1000 == 0 || xAsInt % 1000 == 999)
+	outColor = Color::Green;
+    else
+	outColor = Color::Yellow;
 
     return distance;
 }
@@ -38,7 +42,8 @@ GameEngine<WindowWidth, WindowHeight>::GameEngine(const char(&previousGameState)
     m_playerPosition(),
     m_playerAngle(0.f),
     m_playerDirection(),
-    m_output()
+    m_output(),
+    m_colors()
 {
     readGameState(previousGameState);
     processKeyboardInput(pressedKey);
@@ -61,7 +66,20 @@ template <unsigned int WindowWidth, unsigned int WindowHeight>
 constexpr auto
 GameEngine<WindowWidth, WindowHeight>::gameOutput() const
 {
-    return CreateConstexprString(m_output);
+    ConstexprString<WindowWidth * WindowHeight * 5>	outputString("");
+    Color						currentColor = Color::White;
+
+    for (unsigned int i = 0; i < WindowHeight * WindowWidth; i++)
+    {
+	const Color	charColor = m_colors[i];
+	if (charColor != currentColor)
+	{
+	    outputString += GetColorAsConstexprString(charColor);
+	    currentColor = charColor;
+	}
+	outputString += m_output[i];
+    }
+    return outputString;
 }
 
 template <unsigned int WindowWidth, unsigned int WindowHeight>
@@ -146,6 +164,7 @@ GameEngine<WindowWidth, WindowHeight>::processColumn(const auto& map, unsigned i
 {
     Vector2f	vector;
     char	wallChar = '#';
+    Color	color = Color::White;
 
     vector.X = 10.f;
     vector.Y = static_cast<float>(10.f * (static_cast<float>(WindowWidth) - 2.f * columnId)) / static_cast<float>(WindowWidth);
@@ -156,12 +175,14 @@ GameEngine<WindowWidth, WindowHeight>::processColumn(const auto& map, unsigned i
     rotatedVector.X = (vector.X * angleCos + vector.Y * angleSin);
     rotatedVector.Y = (vector.X * angleSin - vector.Y * angleCos);
 
-    const float distance = calcDistance(map, m_playerPosition, rotatedVector, rotatedVector.length(), wallChar);
+    const float distance = calcDistance(map, m_playerPosition, rotatedVector, rotatedVector.length(), wallChar, color);
     const unsigned int wallSize = static_cast<float>(WindowHeight) * 500.f / distance;
     const unsigned int startWallOffset = (wallSize >= WindowHeight) ? 0 : WindowHeight / 2 - wallSize / 2;
     const unsigned int endWallOffset = (wallSize >= WindowHeight) ? WindowHeight - 1 : WindowHeight / 2 + wallSize / 2;
     for (unsigned int y = startWallOffset; y < endWallOffset; y++)
     {
-    	m_output[y * WindowWidth + columnId] = wallChar;
+	unsigned int charIndex = y * WindowWidth + columnId;
+    	m_output[charIndex] = wallChar;
+	m_colors[charIndex] = color;
     }
 }
