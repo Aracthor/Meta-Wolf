@@ -8,8 +8,8 @@ class	Map
 public:
     constexpr Map(const char(&mapString)[MAP_STRING_LENGTH]);
 
-    constexpr bool pointIsInsideWall(float x, float y) const;
-    constexpr bool pointIsInsideWall(const Vector2f& point) const;
+    constexpr char getPointChar(float x, float y) const;
+    constexpr char getPointChar(const Vector2f& point) const;
 
     constexpr std::size_t	width() const;
     constexpr std::size_t	height() const;

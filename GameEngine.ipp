@@ -6,27 +6,24 @@ calcDistance(auto& map, const Vector2f& playerPosition, const Vector2f& vector, 
     Vector2f	movement = vector;
     Vector2f	position = playerPosition + movement;
 
-    while (!map.pointIsInsideWall(position))
+    while (map.getPointChar(position) == ' ')
     {
     	position += movement;
     }
     movement *= -0.1f;
-    while (map.pointIsInsideWall(position))
+    while (map.getPointChar(position) != ' ')
     {
     	position += movement;
     }
     movement *= -0.1f;
-    while (!map.pointIsInsideWall(position))
+    while (map.getPointChar(position) == ' ')
     {
     	position += movement;
     }
     const float		distance = (playerPosition - position).length() / vectorNorm * 10.f;
     unsigned int	xAsInt = static_cast<unsigned int>(position.X);
 
-    if (xAsInt % 1000 == 0 || xAsInt % 1000 == 999)
-	outWall = '#';
-    else
-	outWall = '@';
+    outWall = map.getPointChar(position);
 
     return distance;
 }

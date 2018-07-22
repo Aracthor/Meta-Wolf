@@ -21,21 +21,22 @@ Map<MAP_STRING_LENGTH>::Map(const char(&mapString)[MAP_STRING_LENGTH]) :
     }
 }
 
+
 template <std::size_t MAP_STRING_LENGTH>
-constexpr bool
-Map<MAP_STRING_LENGTH>::pointIsInsideWall(float x, float y) const
+constexpr char
+Map<MAP_STRING_LENGTH>::getPointChar(float x, float y) const
 {
     x /= 1000.f;
     y /= 1000.f;
     const unsigned int offset = static_cast<std::size_t>(y) * (m_width + 1) + static_cast<std::size_t>(x) + 1;
-    return m_data[offset] != '0';
+    return m_data[offset];
 }
 
 template <std::size_t MAP_STRING_LENGTH>
-constexpr bool
-Map<MAP_STRING_LENGTH>::pointIsInsideWall(const Vector2f& point) const
+constexpr char
+Map<MAP_STRING_LENGTH>::getPointChar(const Vector2f& point) const
 {
-    return pointIsInsideWall(point.X, point.Y);
+    return getPointChar(point.X, point.Y);
 }
 
 
