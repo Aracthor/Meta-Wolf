@@ -29,7 +29,7 @@ private:
     float		m_playerAngle;
     Vector2f		m_playerDirection;
     char	        m_output[WindowHeight * WindowWidth];
-    Color		m_colors[WindowHeight * WindowWidth];
+    Color::Type		m_colors[WindowHeight * WindowWidth];
 };
 
 #include "GameEngine.ipp"

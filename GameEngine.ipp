@@ -1,7 +1,7 @@
 namespace
 {
 constexpr float
-calcDistance(auto& map, const Vector2f& playerPosition, const Vector2f& vector, float vectorNorm, char& outWall, Color& outColor)
+calcDistance(auto& map, const Vector2f& playerPosition, const Vector2f& vector, float vectorNorm, char& outWall, Color::Type& outColor)
 {
     Vector2f	movement = vector;
     Vector2f	position = playerPosition + movement;
@@ -66,15 +66,15 @@ template <unsigned int WindowWidth, unsigned int WindowHeight>
 constexpr auto
 GameEngine<WindowWidth, WindowHeight>::gameOutput() const
 {
-    ConstexprString<WindowWidth * WindowHeight * 5>	outputString("");
-    Color						currentColor = Color::White;
+    ConstexprString<WindowWidth * WindowHeight * 2>	outputString("");
+    Color::Type						currentColor = Color::White;
 
     for (unsigned int i = 0; i < WindowHeight * WindowWidth; i++)
     {
-	const Color	charColor = m_colors[i];
+	const Color::Type	charColor = m_colors[i];
 	if (charColor != currentColor)
 	{
-	    outputString += GetColorAsConstexprString(charColor);
+	    outputString += Color::GetColorAsConstexprString(charColor);
 	    currentColor = charColor;
 	}
 	outputString += m_output[i];
@@ -164,7 +164,7 @@ GameEngine<WindowWidth, WindowHeight>::processColumn(const auto& map, unsigned i
 {
     Vector2f	vector;
     char	wallChar = '#';
-    Color	color = Color::White;
+    Color::Type	color = Color::White;
 
     vector.X = 10.f;
     vector.Y = static_cast<float>(10.f * (static_cast<float>(WindowWidth) - 2.f * columnId)) / static_cast<float>(WindowWidth);
