@@ -1,6 +1,14 @@
 #include "Maths.hpp"
 
 template <typename T>
+constexpr T
+Vector2<T>::dot(const Vector2<T>& u, const Vector2<T>& v)
+{
+    return (u.x * v.x + u.y * v.y);
+}
+
+
+template <typename T>
 constexpr
 Vector2<T>::Vector2() :
     X(0.f),

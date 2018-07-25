@@ -3,6 +3,8 @@
 template <typename T>
 struct	Vector2
 {
+    constexpr static T		dot(const Vector2<T>& u, const Vector2<T>& v);
+
     constexpr			Vector2();
     constexpr			Vector2(T x, T y);
     constexpr			Vector2(const Vector2<T>& other);

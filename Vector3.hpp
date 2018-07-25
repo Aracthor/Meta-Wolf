@@ -3,6 +3,9 @@
 template <typename T>
 struct	Vector3
 {
+    constexpr static T		dot(const Vector3<T>& u, const Vector3<T>& v);
+    constexpr static Vector3<T>	cross(const Vector3<T>& u, const Vector3<T>& v);
+
     constexpr			Vector3();
     constexpr			Vector3(T x, T y, T z);
     constexpr			Vector3(const Vector3<T>& other);
